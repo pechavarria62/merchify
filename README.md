@@ -1,5 +1,32 @@
 # merchify
 
+**Merchify** is a modern e-commerce web application built with [Next.js](https://nextjs.org)bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app)., designed for selling merchandise and products online. It features a clean, responsive interface, user authentication, product browsing, and a shopping cart experience.
+
+## Features
+
+- 🛒 Browse and search products
+- 🔐 User authentication and login
+- 🧺 Shopping cart and checkout flow
+- 📦 Product management (add, edit, remove)
+- ⚡ Fast, optimized, and mobile-friendly UI
+- 🎨 Customizable with Tailwind CSS
+- 🗄️ Powered by MySQL and Prisma ORM
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org) (App Router)
+- [React](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Prisma ORM](https://www.prisma.io/)
+- [MySQL](https://www.mysql.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+
+## Purpose
+
+Merchify is a template and starting point for anyone looking to build a scalable, full-stack e-commerce platform with modern web technologies.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

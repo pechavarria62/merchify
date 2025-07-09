@@ -2,16 +2,23 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaSearch, FaShoppingBasket } from 'react-icons/fa';
+import { FaSearch, FaShoppingBasket, FaHome, FaStore, FaInfoCircle, FaEnvelope  } from 'react-icons/fa';
+import Image from 'next/image';
 
-const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'Shop', href: '/shop' },
-  { name: 'About', href: '/about' },
-  { name: 'Contact', href: '/contact' },
+type NavLink = {
+  name: string;
+  href: string;
+  icon: React.ReactNode;
+};
+
+const navLinks: NavLink[] = [
+  { name: 'Home', href: '/' , icon: <FaHome size={20} /> },
+  { name: 'Shop', href: '/shop', icon: <FaStore size={20} /> },
+  { name: 'About', href: '/about', icon: <FaInfoCircle size={20} /> },
+  { name: 'Contact', href: '/contact', icon: <FaEnvelope size={20} /> },
 ];
 
-export default function Topmenu() {
+const Topmenu: React.FC = () => {
   const pathname = usePathname();
 
   return (
@@ -19,8 +26,14 @@ export default function Topmenu() {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          {/* Replace with your logo image if you have one */}
-          <span className="font-extrabold text-xl tracking-tight text-gray-900">
+          <Image
+            src="/img/logo.png"
+            alt="Merchify Logo"
+            width={35}
+            height={35}
+            className="rounded-full"
+          />
+          <span className="hidden md:inline font-extrabold text-xl tracking-tight text-gray-900">
             Merchify
           </span>
         </Link>
@@ -35,7 +48,12 @@ export default function Topmenu() {
                 pathname === link.href ? 'underline underline-offset-4' : ''
               }`}
             >
-              {link.name}
+              <span className="text-base md:hidden flex items-center gap-10">
+                {link.icon}</span>
+              <span className="hidden md:inline">
+                {link.name}
+              </span>
+
             </Link>
           ))}
         </div>
@@ -45,12 +63,14 @@ export default function Topmenu() {
           <Link
             href="/search"
             className="text-gray-700 hover:text-blue-600 transition"
+            aria-label="Search"
           >
             <FaSearch size={20} />
           </Link>
           <Link
             href="/cart"
             className="text-gray-700 hover:text-blue-600 transition"
+            aria-label="Shopping Cart"
           >
             <FaShoppingBasket size={22} />
           </Link>
@@ -58,4 +78,6 @@ export default function Topmenu() {
       </div>
     </nav>
   );
-}
+};
+
+export default Topmenu;
