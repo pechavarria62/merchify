@@ -1,11 +1,13 @@
 'use client';
 
-import Topmenu from '../components/Topmenu';
+// import Topmenu from '../components/Topmenu';
+import Home from '../components/Home';
 
 const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Topmenu />
+      <Home/>
+      {/* <Topmenu />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className='mt-8'>
             <h1 className="text-3xl font-bold text-gray-900 mt-6">
@@ -15,7 +17,7 @@ const HomePage: React.FC = () => {
                 Discover the best merchandise and apparel for your favorite brands.
             </p>
         </div>
-      </main>
+      </main> */}
     </div>
   );
 };
