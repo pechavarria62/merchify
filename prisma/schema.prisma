@@ -46,9 +46,7 @@ model Invoice {
 }
 
 model Revenue {
-  id        Int      @id @default(autoincrement())
-  invoice   Invoice  @relation(fields: [invoiceId], references: [id])
-  invoiceId Int      @unique
-  amount    Float
-  receivedAt DateTime
+  id      Int     @id @default(autoincrement())
+  month   String  @unique
+  amount  Float
 }
