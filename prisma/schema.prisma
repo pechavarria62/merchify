@@ -50,3 +50,4 @@ model Revenue {
   month   String  @unique
   amount  Float
 }
+s
