@@ -1,11 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useUser } from '../../context/UserContext';
 
 const LoginPage: React.FC = () => {
+  const { login } = useUser();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -13,7 +17,12 @@ const LoginPage: React.FC = () => {
 
     // Dummy authentication logic
     if (email === 'user@example.com' && password === 'password') {
-      alert('Login successful!');
+      login({
+        name: 'John Doe',
+        avatar: '/img/avatar.jpg',
+      });
+      // Redirect to home page after login
+      router.push('/');
     } else {
       setError('Invalid email or password');
     }

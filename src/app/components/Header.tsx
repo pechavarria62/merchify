@@ -24,7 +24,16 @@ const Header: React.FC = () => {
 
   return (
    <header className="flex items-center justify-between py-0 px-4 border-b">
-  <div className="text-lg font-bold">LOGO</div>
+  <div className="flex items-center gap-2">
+  <Image 
+    src="/img/logo.png" // replace with your actual logo path
+    alt="Company Logo"
+    width={32}
+    height={32}
+    className="object-contain"
+  />
+  <span className="text-lg font-bold hidden sm:inline">MERCHIFY</span>
+</div>
   <nav className="flex items-center gap-4"> {/* changed gap-6 to gap-4 */}
     {navLinks.map((link) => (
       <Link

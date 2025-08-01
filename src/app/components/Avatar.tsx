@@ -4,9 +4,30 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useUser } from '../../context/UserContext';
 
 const Avatar: React.FC = () => {
+  const { user, logout } = useUser();
   const [isOpen, setIsOpen] = useState(false);
+
+  if (!user) {
+    return (
+      <div className="flex gap-3">
+        <Link
+          href="/login"
+          className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+        >
+          Login
+        </Link>
+        <Link
+          href="/signup"
+          className="px-4 py-2 text-sm rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50"
+        >
+          Sign Up
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -14,15 +35,17 @@ const Avatar: React.FC = () => {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <div className="flex flex-col items-center gap-2 cursor-pointer">
+      <div className="flex items-center gap-2 cursor-pointer">
         <Image
-          src="/img/avatar.jpg"
+          src={user.avatar} // ✅ Replace with dynamic avatar if you have it
           alt="User Avatar"
           width={32}
           height={32}
           className="rounded-full border border-gray-300"
         />
-        <span className="hidden md:inline text-gray-800 text-sm">Username</span>
+        <span className="hidden md:inline text-gray-800 text-sm">
+          {user.name}
+        </span>
       </div>
 
       {isOpen && (
@@ -34,29 +57,44 @@ const Avatar: React.FC = () => {
         >
           <ul className="space-y-2 text-sm text-gray-700">
             <li>
-              <Link href="/profile" className="block hover:bg-gray-100 p-2 rounded-md">
+              <Link
+                href="/profile"
+                className="block hover:bg-gray-100 p-2 rounded-md"
+              >
                 Profile
               </Link>
             </li>
             <li>
-              <Link href="/settings" className="block hover:bg-gray-100 p-2 rounded-md">
+              <Link
+                href="/settings"
+                className="block hover:bg-gray-100 p-2 rounded-md"
+              >
                 Settings
               </Link>
             </li>
             <li>
-              <Link href="/saved" className="block hover:bg-gray-100 p-2 rounded-md">
+              <Link
+                href="/saved"
+                className="block hover:bg-gray-100 p-2 rounded-md"
+              >
                 Saved Shopping List
               </Link>
             </li>
             <li>
-              <Link href="/switch-account" className="block hover:bg-gray-100 p-2 rounded-md">
+              <Link
+                href="/switch-account"
+                className="block hover:bg-gray-100 p-2 rounded-md"
+              >
                 Switch Account
               </Link>
             </li>
             <li>
-              <Link href="/logout" className="block hover:bg-red-100 text-red-600 p-2 rounded-md">
+              <button
+                onClick={logout}
+                className="w-full text-left hover:bg-red-100 text-red-600 p-2 rounded-md"
+              >
                 Logout
-              </Link>
+              </button>
             </li>
           </ul>
         </motion.div>
