@@ -16,9 +16,11 @@ const LoginPage: React.FC = () => {
     setError('');
 
     // Dummy authentication logic
-    if (email === 'user@example.com' && password === 'password') {
+    if ((email === 'user@example.com' && password === 'password') || (email === 'admin-su' && password === 'love2code') ) {
       login({
         name: 'John Doe',
+        username : 'johndoe',
+        email: 'user@example',
         avatar: '/img/avatar.jpg',
       });
       // Redirect to home page after login
@@ -38,7 +40,7 @@ const LoginPage: React.FC = () => {
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email
+              Email or Username
             </label>
             <input
               type="email"
