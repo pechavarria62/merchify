@@ -6,7 +6,9 @@ import { useUser } from '../../context/UserContext';
 
 const LoginPage: React.FC = () => {
   const { login } = useUser();
-  const [email, setEmail] = useState<string>('');
+  // const [email, setEmail] = useState<string>('');
+  // const [username, setUsername] = useState<string>('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
   const router = useRouter();
@@ -16,7 +18,7 @@ const LoginPage: React.FC = () => {
     setError('');
 
     // Dummy authentication logic
-    if ((email === 'user@example.com' && password === 'password') || (email === 'admin-su' && password === 'love2code') ) {
+    if ((identifier === 'user@example.com' && password === 'password') || (identifier === 'admin-su' && password === 'love2code') ) {
       login({
         name: 'John Doe',
         username : 'johndoe',
@@ -37,18 +39,19 @@ const LoginPage: React.FC = () => {
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label
-              htmlFor="email"
+              htmlFor="text"
               className="block text-sm font-medium text-gray-700"
             >
               Email or Username
             </label>
             <input
-              type="email"
+              type="text"
+              placeholder='Enter your email or username'
               id="email"
-              name="email"
+              name=""
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>

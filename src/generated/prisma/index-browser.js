@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.11.1
- * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
+ * Prisma Client JS version: 6.13.0
+ * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
  */
 Prisma.prismaVersion = {
-  client: "6.11.1",
-  engine: "f40f79ec31188888a2e33acda0ecc8fd10a853a9"
+  client: "6.13.0",
+  engine: "361e86d0ea4987e9f53a565309b3eed797a6bcbd"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -122,10 +122,10 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  email: 'email',
-  username: 'username',
-  password: 'password',
   name: 'name',
+  email: 'email',
+  password: 'password',
+  avatar: 'avatar',
   createdAt: 'createdAt'
 };
 
@@ -133,24 +133,22 @@ exports.Prisma.CustomerScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  image_url: 'image_url',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.RevenueScalarFieldEnum = {
+  id: 'id',
+  month: 'month',
+  revenue: 'revenue'
 };
 
 exports.Prisma.InvoiceScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
   status: 'status',
-  dueDate: 'dueDate',
-  userId: 'userId',
-  customerId: 'customerId',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.RevenueScalarFieldEnum = {
-  id: 'id',
-  invoiceId: 'invoiceId',
-  amount: 'amount',
-  receivedAt: 'receivedAt'
+  createdAt: 'createdAt',
+  customer_id: 'customer_id'
 };
 
 exports.Prisma.SortOrder = {
@@ -164,27 +162,37 @@ exports.Prisma.NullsOrder = {
 };
 
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
   email: 'email',
-  username: 'username',
   password: 'password',
-  name: 'name'
+  avatar: 'avatar'
 };
 
 exports.Prisma.CustomerOrderByRelevanceFieldEnum = {
+  id: 'id',
   name: 'name',
-  email: 'email'
+  email: 'email',
+  image_url: 'image_url'
+};
+
+exports.Prisma.RevenueOrderByRelevanceFieldEnum = {
+  id: 'id',
+  month: 'month'
 };
 
 exports.Prisma.InvoiceOrderByRelevanceFieldEnum = {
-  status: 'status'
+  status: 'status',
+  createdAt: 'createdAt',
+  customer_id: 'customer_id'
 };
 
 
 exports.Prisma.ModelName = {
   User: 'User',
   Customer: 'Customer',
-  Invoice: 'Invoice',
-  Revenue: 'Revenue'
+  Revenue: 'Revenue',
+  Invoice: 'Invoice'
 };
 
 /**

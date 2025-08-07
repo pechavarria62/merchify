@@ -15,40 +15,34 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  username  String    @unique
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
   password  String
-  name      String?
-  invoices  Invoice[]
-  createdAt DateTime  @default(now())
+  avatar    String?
+  createdAt DateTime @default(now())
 }
 
 model Customer {
-  id        Int       @id @default(autoincrement())
+  id        String    @id
   name      String
   email     String    @unique
-  invoices  Invoice[]
+  image_url String?
   createdAt DateTime  @default(now())
-}
-
-model Invoice {
-  id         Int      @id @default(autoincrement())
-  amount     Float
-  status     String
-  dueDate    DateTime
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  customer   Customer @relation(fields: [customerId], references: [id])
-  customerId Int
-  revenue    Revenue?
-  createdAt  DateTime @default(now())
+  invoices  Invoice[]
 }
 
 model Revenue {
-  id         Int      @id @default(autoincrement())
-  invoice    Invoice  @relation(fields: [invoiceId], references: [id])
-  invoiceId  Int      @unique
-  amount     Float
-  receivedAt DateTime
+  id      String @id @default(uuid())
+  month   String @unique
+  revenue Float
+}
+
+model Invoice {
+  id          Int      @id @default(autoincrement())
+  amount      Float
+  status      String
+  createdAt   String
+  customer_id String
+  customer    Customer @relation(fields: [customer_id], references: [id])
 }
