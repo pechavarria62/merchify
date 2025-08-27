@@ -162,7 +162,6 @@ exports.Prisma.NullsOrder = {
 };
 
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
-  id: 'id',
   name: 'name',
   email: 'email',
   password: 'password',

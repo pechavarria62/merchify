@@ -28,17 +28,17 @@ async function seedUsers() {
 
     // Use upsert to insert user if it doesn't exist or update if it does
     await prisma.user.upsert({
-      where: { email: user.email }, // Unique identifier
-      update: {},                   // No updates on conflict
+      where: { email: user.email }, 
+      update: {},                   
       create: {
         name: user.name,
         email: user.email,
-        password: hashedPassword,  // Store the hashed password
-        avatar: user.Avatar || ''  // Default to empty string if no avatar
+        password: hashedPassword,  
+        avatar: user.Avatar || '' 
       },
     });
   }
-  console.log(`✅ Seeded ${users.length} users`);
+  console.log(`Seeded ${users.length} users`);
 }
 
 // Function to seed customer data
@@ -46,12 +46,12 @@ async function seedCustomers() {
   for (const customer of customers) {
     // Use upsert to avoid duplicates based on email
     await prisma.customer.upsert({
-      where: { email: customer.email }, // Unique constraint
+      where: { email: customer.email },
       update: {},
-      create: customer,                 // Insert new customer data
+      create: customer,
     });
   }
-  console.log(`✅ Seeded ${customers.length} customers`);
+  console.log(`Seeded ${customers.length} customers`);
 }
 
 // Function to seed revenue data
@@ -64,7 +64,7 @@ async function seedRevenue() {
       create: rev,
     });
   }
-  console.log(`✅ Seeded ${revenue.length} revenue records`);
+  console.log(`Seeded ${revenue.length} revenue records`);
 }
 
 // Function to seed invoice data
@@ -75,28 +75,27 @@ async function seedInvoices() {
       data: invoice,
     });
   }
-  console.log(`✅ Seeded ${invoices.length} invoices`);
+  console.log(`Seeded ${invoices.length} invoices`);
 }
 
-// Main function to orchestrate the seeding process
 async function main() {
   console.log('🌱 Starting full database seed...');
 
-  await seedUsers();     // Seed users
-  await seedCustomers(); // Seed customers
-  await seedInvoices();  // Seed invoices
-  await seedRevenue();   // Seed revenue
-
-  // You can re-order the functions above depending on relational constraints
+  await seedUsers();    
+  await seedCustomers();
+  await seedInvoices(); 
+  await seedRevenue();  
 }
 
 // Run the main function and handle errors
 main()
   .catch((e) => {
-    console.error('❌ Seed failed:', e); // Log any errors
-    process.exit(1);                    // Exit with error code
+    // Log errors
+    console.error('Seed failed:', e);
+    process.exit(1);                    
   })
+  //disconnect the DB
   .finally(async () => {
-    await prisma.$disconnect();         // Always disconnect the DB
+    await prisma.$disconnect();  
     console.log('🌾 Seed complete and DB disconnected.');
   });

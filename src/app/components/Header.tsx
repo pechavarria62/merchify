@@ -16,6 +16,7 @@ const navLinks: NavLink[] = [
   { name: 'Shop', href: '/shop', icon: <FaStore size={20} /> },
   { name: 'About', href: '/about', icon: <FaInfoCircle size={20} /> },
   { name: 'Contact', href: '/contact', icon: <FaEnvelope size={20} /> },
+  { name: 'Basket', href: '/basket', icon: <FaShoppingBasket size={20} /> },
 ];
 
 const Header: React.FC = () => {
@@ -26,7 +27,7 @@ const Header: React.FC = () => {
    <header className="flex items-center justify-between py-0 px-4 border-b">
   <div className="flex items-center gap-2">
   <Image 
-    src="/img/logo.png" // replace with your actual logo path
+    src="/img/logo.png" 
     alt="Company Logo"
     width={32}
     height={32}
@@ -34,7 +35,7 @@ const Header: React.FC = () => {
   />
   <span className="text-lg font-bold hidden sm:inline">MERCHIFY</span>
 </div>
-  <nav className="flex items-center gap-4"> {/* changed gap-6 to gap-4 */}
+  <nav className="flex items-center gap-4">
     {navLinks.map((link) => (
       <Link
         key={link.name}
@@ -43,16 +44,21 @@ const Header: React.FC = () => {
           pathname === link.href ? 'underline underline-offset-4' : ''
         }`}
       >
-        <span className="text-base md:hidden flex items-center gap-2"> {/* reduced gap */}
+        {link.name === 'Basket' ?(<span className="text-base flex items-center">
+          {link.icon}
+        </span>):(<>
+        <span className="text-base md:hidden flex items-center gap-2">
           {link.icon}
         </span>
         <span className="hidden md:inline">
           {link.name}
         </span>
+        </>)}
+        
       </Link>
     ))}
   </nav>
-  <div className="text-xl ml-2"> {/* optional: added margin to slightly space Avatar from nav */}
+  <div className="text-xl ml-2"> 
     <Avatar />
   </div>
 </header>

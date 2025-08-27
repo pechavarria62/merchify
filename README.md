@@ -1,6 +1,6 @@
 # merchify
 
-**Merchify** is a modern e-commerce web application built with [Next.js](https://nextjs.org)bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app)., designed for selling merchandise and products online. It features a clean, responsive interface, user authentication, product browsing, and a shopping cart experience.
+**Merchify** is a modern e-commerce web application built with [Next.js](https://nextjs.org) bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app)., this is to 
 
 ## Features
 

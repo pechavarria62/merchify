@@ -12,14 +12,14 @@ import { formatCurrency } from './utils';
 
 // Create a MySQL connection pool for efficient DB connections reuse
 const pool = mysql.createPool({
-  host: process.env.MYSQL_HOST || 'localhost',  // DB host from env or default to localhost
+  host: process.env.MYSQL_HOST || 'localhost', // DB host from env or default to localhost
   port: Number(process.env.MYSQL_PORT) || 3306, // DB port, default MySQL port 3306
-  user: process.env.MYSQL_USER || 'root',       // DB user from env or default root
-  password: process.env.MYSQL_PASSWORD || '',   // DB password from env or empty string
+  user: process.env.MYSQL_USER || 'root', // DB user from env or default root
+  password: process.env.MYSQL_PASSWORD || '', // DB password from env or empty string
   database: process.env.MYSQL_DATABASE || 'your_db_name', // DB name
-  waitForConnections: true,     // Wait for a free connection if pool is full
-  connectionLimit: 10,          // Max 10 concurrent connections
-  queueLimit: 0,                // Unlimited queued connection requests
+  waitForConnections: true, // Wait for a free connection if pool is full
+  connectionLimit: 10, // Max 10 concurrent connections
+  queueLimit: 0, // Unlimited queued connection requests
 });
 
 // Fetch all revenue records from the 'revenue' table
@@ -63,9 +63,13 @@ export async function fetchLatestInvoices() {
 export async function fetchCardData() {
   try {
     // Count total invoices
-    const [[invoiceCountRow]] = await pool.query<any[]>('SELECT COUNT(*) as count FROM invoices');
+    const [[invoiceCountRow]] = await pool.query<any[]>(
+      'SELECT COUNT(*) as count FROM invoices'
+    );
     // Count total customers
-    const [[customerCountRow]] = await pool.query<any[]>('SELECT COUNT(*) as count FROM customers');
+    const [[customerCountRow]] = await pool.query<any[]>(
+      'SELECT COUNT(*) as count FROM customers'
+    );
     // Sum paid and pending invoice amounts
     const [[statusRow]] = await pool.query<any[]>(`
       SELECT
@@ -97,7 +101,7 @@ const ITEMS_PER_PAGE = 6; // Number of invoices per page for pagination
 // Fetch invoices filtered by query string with pagination
 export async function fetchFilteredInvoices(
   query: string,
-  currentPage: number,
+  currentPage: number
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE; // Calculate offset for pagination
 
@@ -151,13 +155,7 @@ export async function fetchInvoicesPages(query: string) {
         invoices.amount LIKE ? OR
         invoices.date LIKE ? OR
         invoices.status LIKE ?`,
-      [
-        `%${query}%`,
-        `%${query}%`,
-        `%${query}%`,
-        `%${query}%`,
-        `%${query}%`,
-      ]
+      [`%${query}%`, `%${query}%`, `%${query}%`, `%${query}%`, `%${query}%`]
     );
     const totalPages = Math.ceil(Number(countRow.count) / ITEMS_PER_PAGE);
     return totalPages;
@@ -245,7 +243,7 @@ export async function fetchFilteredCustomers(query: string) {
   }
 }
 
-// Fetch a user by their email (used for login/authentication)
+// Fetch a user by their email
 export async function getUser(email: string) {
   try {
     const [rows] = await pool.query<RowDataPacket[]>(

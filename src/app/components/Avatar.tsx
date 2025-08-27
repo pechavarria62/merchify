@@ -14,14 +14,15 @@ const Avatar: React.FC = () => {
     return (
       <div className="flex gap-3">
         <Link
+        // bg-blue-600
           href="/login"
-          className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+          className="px-4 py-2 text-sm rounded-lg bg-orange-500 text-white hover:bg-blue-700"
         >
           Login
         </Link>
         <Link
           href="/signup"
-          className="px-4 py-2 text-sm rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50"
+          className="px-4 py-2 text-sm rounded-lg border border-orange-600 text-orange-600 hover:bg-blue-50"
         >
           Sign Up
         </Link>
@@ -37,7 +38,7 @@ const Avatar: React.FC = () => {
     >
       <div className="flex items-center gap-2 cursor-pointer">
         <Image
-          src={user.avatar} // ✅ Replace with dynamic avatar if you have it
+          src={user.avatar} 
           alt="User Avatar"
           width={32}
           height={32}
