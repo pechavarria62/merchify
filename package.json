@@ -7,12 +7,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "seed": "node scripts/seeds.js",
+    "seed": "node seeds.ts",
     "lint": "next lint",
     "format": "prettier --write ."
   },
   "prisma": {
-    "seed": "node scripts/seeds.js"
+    "seed": "node seeds.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.13.0",
@@ -34,6 +34,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
+    "cypress": "^15.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
     "postcss": "^8.5.6",

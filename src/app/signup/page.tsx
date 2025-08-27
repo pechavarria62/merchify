@@ -6,28 +6,62 @@ import { useRouter } from 'next/navigation';
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent
+    ) => {
     e.preventDefault();
     setError('');
 
-    // Dummy signup logic
-    if (email && username && password) {
-      // Redirect to login page after signup
-      router.push('/login');
-    } else {
+    if (!email || !username || !password) {
       setError('All fields are required');
+      return;
+    }
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({message:'something went wrong' }));
+        setError(
+          data.message
+        );
+        return;
+      }
+      router.push('/login');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+        console.error('Signup error:', err);
+        return;
+      } else {
+        setError('something went wrong');
+      }
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md bg-white p-8 rounded shadow">
-        <h1 className="text-3xl font-bold text-center mb-8">Signup Page</h1>
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <h1 className="text-3xl font-bold text-center mb-8">
+          Signup Page
+        </h1>
+        <form
+          className="space-y-6"
+          onSubmit={handleSubmit}
+        >
           <div>
             <label
               htmlFor="email"
@@ -42,7 +76,9 @@ const SignupPage: React.FC = () => {
               name=""
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
@@ -60,7 +96,9 @@ const SignupPage: React.FC = () => {
               name=""
               required
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) =>
+                setUsername(e.target.value)
+              }
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
@@ -77,11 +115,17 @@ const SignupPage: React.FC = () => {
               id="password"
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
-          {error && <div className="text-red-500 text-sm">{error}</div>}
+          {error && (
+            <div className="text-red-500 text-sm">
+              {error}
+            </div>
+          )}
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition"

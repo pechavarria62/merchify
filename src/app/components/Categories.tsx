@@ -1,11 +1,6 @@
 import React from "react";
-
-const categories = [
-  { name: "Clothing", image: "/images/clothing.jpg" },
-  { name: "Bags", image: "/images/bag.jpg" },
-  { name: "Shoes", image: "/images/shoes.jpg" },
-  { name: "Electronics", image: "/images/watch.jpg" },
-];
+import Image from "next/image";
+import categories from "@/lib/categories";
 
 const Categories: React.FC = () => {
   return (
@@ -14,7 +9,9 @@ const Categories: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {categories.map((category) => (
           <div key={category.name} className="text-center">
-            <img
+            <Image
+              width={160}
+              height={160}
               src={category.image}
               alt={category.name}
               className="w-full h-32 object-cover mb-2"
