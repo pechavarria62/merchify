@@ -1,14 +1,8 @@
 
 'use client';
 
+import {User} from '../lib/definitions';
 import React, { createContext, useContext, useState } from 'react';
-
-type User = {
-  name: string;      
-  username: string; 
-  avatar: string;   
-  email: string;    
-};
 
 type UserContextType = {
   user: User | null;                  
