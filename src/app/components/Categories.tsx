@@ -10,11 +10,11 @@ const Categories: React.FC = () => {
         {categories.map((category) => (
           <div key={category.name} className="text-center">
             <Image
-              width={160}
-              height={160}
+              width={80}
+              height={80}
               src={category.image}
               alt={category.name}
-              className="w-full h-32 object-cover mb-2"
+              className="w-full h-30 object-cover mb-2"
             />
             <h3 className="font-medium">{category.name}</h3>
             <button className="text-sm text-gray-600 hover:underline">
