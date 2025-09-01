@@ -21,7 +21,7 @@ const SignupPage: React.FC = () => {
       return;
     }
     try {
-      const res = await fetch('/api/register', {
+      const res = await fetch('./api/register', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -47,7 +47,7 @@ const SignupPage: React.FC = () => {
         console.error('Signup error:', err);
         return;
       } else {
-        setError('something went wrong');
+        setError('something went wrong1');
       }
     }
   };
