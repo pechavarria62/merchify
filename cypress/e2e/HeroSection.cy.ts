@@ -1,6 +1,6 @@
-describe('Homepage', () => {
+describe('HeroSection', () => {
   it('should load the homepage and display the hero section', () => {
-    // Visit the homepage
+    // Visit the site
     cy.visit('http://localhost:3000');
 
     // Check if the main heading in the HeroSection is visible
@@ -11,7 +11,7 @@ describe('Homepage', () => {
       .should('be.visible');
 
     // "Shop Now" button
-    cy.get('button')
+    cy.get('a')
       .contains('Shop Now')
       .should('be.visible');
   });
