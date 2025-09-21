@@ -1,54 +1,59 @@
-// This file defines TypeScript types for the app's data structures.
+// TypeScript types for the app's data structures.
 // These types describe the shape and allowed data types of your objects.
 // In Prisma is generated automatically.
 
 export type User = {
-  id: string;       
-  name: string;     
-  email: string;    
-  password: string; 
+  id: number | string;
+  name?: string | null;
+  username?: string | null;
+  email?: string | null;
+  avatar?: string | null;
+  createdAt?: Date | string | null;
 };
 
 export type Customer = {
-  id: string;        
-  name: string;      
-  email: string;     
-  image_url: string; 
+  id: string;
+  name: string;
+  email: string;
+  image_url: string;
 };
 
 export type Invoice = {
-  id: string;         
+  id: string;
   customer_id: string;
-  amount: number;    
-  date: string;       
+  amount: number;
+  date: string;
   status: 'pending' | 'paid';
 };
 
 export type Revenue = {
-  month: string;    
-  revenue: number;  
+  month: string;
+  revenue: number;
 };
 
 export type LatestInvoice = {
-  id: string;         
-  name: string;       
-  image_url: string;  
-  email: string;      
-  amount: string;     
+  id: string;
+  name: string;
+  image_url: string;
+  email: string;
+  amount: string;
 };
 
-export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
-  amount: number;  
+export type LatestInvoiceRaw = Omit<
+  LatestInvoice,
+  'amount'
+> & {
+  amount: number;
 };
 
 export type InvoicesTable = {
   id: string;
   customer_id: string;
-  name: string;        
-  email: string;       
-  image_url: string;   
-  date: string;        
-  amount: number;     
+  name: string;
+  email: string;
+  image_url: string;
+  date: string;
+  amount: number;
   status: 'pending' | 'paid';
 };
 
@@ -57,9 +62,9 @@ export type CustomersTableType = {
   name: string;
   email: string;
   image_url: string;
-  total_invoices: number;  
-  total_pending: number;   
-  total_paid: number;     
+  total_invoices: number;
+  total_pending: number;
+  total_paid: number;
 };
 
 export type FormattedCustomersTable = {
@@ -68,8 +73,8 @@ export type FormattedCustomersTable = {
   email: string;
   image_url: string;
   total_invoices: number;
-  total_pending: string; 
-  total_paid: string;    
+  total_pending: string;
+  total_paid: string;
 };
 
 export type CustomerField = {

@@ -1,4 +1,5 @@
 # merchify to do list 
+-
 - Remove unused imports to keep your code clean.
 - changed schema to add username i need to change the user in the db thats the reson you get the 500 eror
 - Remove or replace console.logs with proper logging.
