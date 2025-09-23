@@ -14,8 +14,8 @@ const HeroSection: React.FC = () => {
         {categories.map((category) => (
           <div key={category.name} className="text-center">
             <Image
-              width={160}
-              height={160}
+              width={130}
+              height={130}
               src={category.image}
               alt={category.name}
               className="w-full h-32 object-cover mb-2"

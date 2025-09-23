@@ -9,9 +9,15 @@ type UserContextType = {
   login: (user: User) => void;        
   logout: () => void;                 
 };
+/**
+ * global state management system for the current user.
+ */
 
+//This line creates the Context to be consumed by the useContext
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
+
+//This is a React component that provides the user data to all of its children.
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
