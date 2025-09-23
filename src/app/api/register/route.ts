@@ -1,35 +1,18 @@
-// import { prisma } from '@/lib/prisma';
-// import bcrypt from 'bcrypt';
-
-// export async function POST(req: Request) {
-//   const body = await req.json();
-//   console.log(body,'<-----')
-//   const { username, email, password } = body;
-//   console.log(username, email, password,'<-----')
-//   const hashedPassword = await bcrypt.hash(
-//     password,
-//     10
-//   );
-
-//   const user = await prisma.user.create({
-//     data: {
-//       username,
-//       email,
-//       password: hashedPassword,
-//     },
-//   });
-
-//   return new Response(JSON.stringify(user), {
-//     status: 201,
-//   });
-// }
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import type { User as DefUser } from '@/lib/definitions';
-import {PrismaClientKnownRequestError} from '@prisma/client/runtime/binary.js';
+import { Prisma } from '@/generated/prisma/client';
 
+export const runtime = 'nodejs';
 
-// get the interface but omit the password field.
+/*
+* get the interface but omit the password.
+* This type is defined specifically for the
+* object we send back to the browser after the
+* user is created. It is a critical security 
+* practice to never send a password back in an
+* API response, not even the hashed one..
+*/ 
 type MerchiUser = Omit<DefUser, 'password'> & {
   name: string | null;
   username?: string | null;
@@ -38,7 +21,7 @@ type MerchiUser = Omit<DefUser, 'password'> & {
   createdAt?: string | null;
 };
 
-function PrismaError(err: unknown): err is PrismaClientKnownRequestError {
+function PrismaError(err: unknown): err is Prisma.PrismaClientKnownRequestError {
   return typeof err === 'object' && err !== null && 'code' in (err as Record<string, unknown>);
 }
 
@@ -54,7 +37,8 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { username, email, password } = body ?? {};
+    console.log(body,'are we getting any data?')
+    const {email, username,  password } = body ?? {};
   
     
     if (!email || typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email)) {
@@ -79,14 +63,20 @@ export async function POST(req: Request) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    let saveTheUser;
+    try{
+      saveTheUser = await prisma.user.create({
+        data: {
+          username,
+          email,
+          password: hashedPassword,
+        },
+      });
 
-    const saveTheUser = await prisma.user.create({
-      data: {
-        username,
-        email,
-        password: hashedPassword,
-      },
-    });
+    }catch (e) {
+      console.error('Prisma create failed:', e);
+      throw e;
+    }
     
 
     const userRaw = saveTheUser as unknown as {
@@ -117,14 +107,14 @@ export async function POST(req: Request) {
       const target = (err.meta?.target && Array.isArray(err.meta.target))
         ? (err.meta.target as string[]).join(', ')
         : 'field';
-      return new Response(JSON.stringify({ error: `${target} already exists` }), {
-        status: 409,
-        headers: { 'content-type': 'application/json' },
-      });
-    }
-
-    // Log internally; don't log sensitive request bodies or passwords
-    console.error('Registration error:', err);
+        return new Response(JSON.stringify({ error: `${target} already exists` }), {
+          status: 409,
+          headers: { 'content-type': 'application/json' },
+        });
+      }
+      
+      // Log internally; don't log sensitive request bodies or passwords
+      console.error('Registration error:', err);
 
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,

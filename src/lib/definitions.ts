@@ -7,6 +7,7 @@ export type User = {
   name?: string | null;
   username?: string | null;
   email?: string | null;
+  password?: string | null;
   avatar?: string | null;
   createdAt?: Date | string | null;
 };

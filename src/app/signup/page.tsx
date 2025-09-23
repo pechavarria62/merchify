@@ -2,50 +2,45 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import {User} from '@/lib/definitions'
 
 const SignupPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // Pick only specified field from the interface.
+  const [userData, setUserData] = useState<Pick<User, 'email'| 'username'| 'password'>>({
+    email: '',
+    username: '',
+    password: '',
+  })
   const [error, setError] = useState('');
   const router = useRouter();
-  console.log(
-      'Data before handleSubmit',
-      email,
-      username,
-      password
-    );
+  
+  const handleAllImputChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setUserData(PrevData => ({
+      ...PrevData,
+      [name]:value,
+    }));
+  }
+  
 
-  const handleSubmit = async (
-    e: React.FormEvent
-  ) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setError('');
-
+    const {email, username, password} = userData;
     if (!email || !username || !password) {
       setError('All fields are required');
       return;
     }
-    console.log(
-      'Data been send',
-      email,
-      username,
-      password
-    );
+    
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
         },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
+        body: JSON.stringify(userData),
       });
-      console.log(e);
+      console.log(res, 'Show the data')
       if (!res.ok) {
         const data = await res
           .json()
@@ -90,10 +85,8 @@ const SignupPage: React.FC = () => {
               id="email"
               name="email"
               required
-              value={email}
-              onChange={(e) =>
-                console.log(setEmail(e.target.value), 'let see if this is working')
-              }
+              value={userData.email?? ''}
+              onChange={handleAllImputChanges}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
@@ -108,12 +101,10 @@ const SignupPage: React.FC = () => {
               type="text"
               placeholder="Choose a username"
               id="username"
-              name=""
+              name="username"
               required
-              value={username}
-              onChange={(e) =>
-                setUsername(e.target.value)
-              }
+              value={userData.username?? ''}
+              onChange={handleAllImputChanges}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
@@ -128,11 +119,10 @@ const SignupPage: React.FC = () => {
               type="password"
               placeholder="Create a password"
               id="password"
+              name="password"
               required
-              value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
+              value={userData.password?? ''}
+              onChange={handleAllImputChanges}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
