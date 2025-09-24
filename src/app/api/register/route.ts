@@ -28,7 +28,6 @@ function PrismaError(err: unknown): err is Prisma.PrismaClientKnownRequestError 
 export async function POST(req: Request) {
   try {
     const ct = req.headers.get('content-type') ?? '';
-    console.log(ct,'<-----')
     if (!ct.includes('application/json')) {
       return new Response(JSON.stringify({ error: 'Expected application/json' }), {
         status: 415,
