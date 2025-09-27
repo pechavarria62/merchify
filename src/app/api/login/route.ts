@@ -3,11 +3,12 @@ import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
 import type { User as DefUser } from "@/lib/definitions";
 import { error } from "console";
-import { use } from "chai";
+import { prisma } from "@/lib/prisma";
+
 
 const secreto = process.env.AUTH_SECRET;
 if (!secreto) {
-    throw new Error('The secret from is missing')
+    throw new Error('The secret is missing')
 }
 
 type MerchiUser = Omit<DefUser, 'password'> & {createdAt?: string | null};
@@ -32,8 +33,21 @@ export async function POST(req: Request) {
         }
         const body = await req.json();
         const {email,password, identifier} = body ?? {}; 
-        const lookup = (email??identifier) as string | undefined;
+        const getUser = (email??identifier) as string | undefined;
 
-    
+        if (!getUser || typeof getUser !== 'string' || !password || typeof password !== 'string') {
+            return new Response(JSON.stringify({error: 'Missing credentials'}), {status: 400});
+        }
+        
+        // gety the user by email or username
+        const user = await prisma.user.findFirst({
+            where: {
+                OR: [{email: getUser}, {username: getUser}],
+            },
+        });
+        
+        if (!user) {
+            return new Response(JSON.stringify({error: 'Invalid credentials'}), { status: 401 });
+        }
     }
 }
